@@ -1,19 +1,86 @@
-import React, { useState, useEffect, Component } from 'react'
+
+// contoh pagination pake function
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ReactPaginate from 'react-paginate';
+
+
+function GG() {
+  const [offset, setOffset] = useState(0);
+  const [data, setData] = useState([]);
+  const [perPage] = useState(10);
+  const [pageCount, setPageCount] = useState(0)
+
+
+  const getData = async () => {
+    const res = await axios.get(`https://jsonplaceholder.typicode.com/photos`)
+    const data = res.data;
+    const slice = data.slice(offset, offset + perPage)
+    const postData = slice.map(pd => 
+    <div key={pd.id}>
+      <p>{pd.title}</p>
+      <img src={pd.thumbnailUrl} alt="" />
+    </div>)
+    setData(postData)
+    setPageCount(Math.ceil(data.length / perPage))
+  }
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    setOffset(selectedPage + 1)
+  };
+
+  useEffect(() => {
+    getData()
+  }, [offset])
+
+  return (
+    <div className="App">
+      {data}
+      <ReactPaginate
+        previousLabel={"prev"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"} />
+    </div>
+  );
+}
+
+export default GG;
+
+
+
+
+// bekas peringkat lama
+import React, { Component } from 'react'
+// import axios from 'axios'
+import ReactPaginate from 'react-paginate';
 import profile from '../../Images/profile.png';
-import { data } from 'autoprefixer';
 
-const Peringkat = () => {
-    const [offset, setOffset] = useState(0);
-    const [data, setData] = useState([]);
-    const [data1, setData2] = useState([]);
-    const perPage = 4;
-    const [pageCount, setPageCount] = useState(0);
-    const [deletedList] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0); 
 
-    const getData = async() => {
+
+export default class peringkat extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            offset: 0,
+            data: [],
+            perPage: 4,
+            currentPage: 0
+        };
+        this.handlePageClick = this
+            .handlePageClick
+            .bind(this);
+    }
+
+    receivedData() {
+
         const data = [
             {
                 nama: "Fudail Ramadhani",
@@ -214,10 +281,8 @@ const Peringkat = () => {
                 ]
             },
         ];
-
-
         const ascData = data.sort((a, b) => (a.presentase < b.presentase) ? 1 : -1)
-        const slice = ascData.slice(offset, offset + perPage)
+        const slice = ascData.slice(this.state.offset, this.state.offset + this.state.perPage)
         const postData = slice.map(pd =>
             <React.Fragment>
                 <div className='overflow-y-auto pt-2'>
@@ -257,7 +322,7 @@ const Peringkat = () => {
                 }
             }
         }
-        const slice1 = data1.slice(offset, offset + perPage)
+        const slice1 = data1.slice(this.state.offset, this.state.offset + this.state.perPage)
         const postData1 = slice1.map(x => {
             let doneTask = (x.TugasMa).filter(function (item) {
                 return item.Status;
@@ -284,54 +349,60 @@ const Peringkat = () => {
                     </div>
                 </React.Fragment >
             )
-            
         })
-        setData(postData)
-        setData2(postData1)
-        setPageCount(Math.ceil(data,data1.length / perPage))
+        this.setState({
+            pageCount: Math.ceil(data.length / this.state.perPage),
+            postData,
+            postData1
+        })
     }
-    const handlePageClick = (e) => {
+    handlePageClick = (e) => {
         const selectedPage = e.selected;
-        setOffset(selectedPage*perPage)
-}
-useEffect(() => {
-    getData()
-  }, [offset])
-  return (
-   
-    <div>
-    <div className='pt-20 pb-10 '>
-        <div className=' bg-slate-200 rounded-lg w-full h-96  drop-shadow-xl  '>
-            <div className='w-96 mx-auto font-extrabold text-2xl pt-3 pl-20'>Peringkat Teratas</div>
-            <div className='grid grid-cols-2 gap-72 flex-auto w-full h-10 pt-1 pl-16 pr-14'>
-                <div className=' pl-24 pr-20 text-center font-medium'>GOAL</div>
-                <div className=' pl-14 pr-20 text-center font-medium'>MA</div>
-            </div>
+        const offset = selectedPage * this.state.perPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            this.receivedData()
+        });
+    };
+    componentDidMount() {
+        this.receivedData()
+    }
+    render() {
+        return (
             <div>
-                <div className='pl-14 '>
-                    <div className='grid grid-cols-2   gap-x-44 gap-y-3  '>
-                        <div>{data}</div>
-                        <div>{data1}</div>
-                        <ReactPaginate
-                            className=''
-                            previousLabel={"prev"}
-                            nextLabel={"next"}
-                            breakLabel={"..."}
-                            breakClassName={"break-me"}
-                            pageCount={this.state.pageCount}
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={this.handlePageClick}
-                            containerClassName={"pagination"}
-                            subContainerClassName={"pages pagination"}
-                            activeClassName={"active"} />
+                <div className='pt-20 pb-10 '>
+                    <div className=' bg-slate-200 rounded-lg w-full h-96  drop-shadow-xl  '>
+                        <div className='w-96 mx-auto font-extrabold text-2xl pt-3 pl-20'>Peringkat Teratas</div>
+                        <div className='grid grid-cols-2 gap-72 flex-auto w-full h-10 pt-1 pl-16 pr-14'>
+                            <div className=' pl-24 pr-20 text-center font-medium'>GOAL</div>
+                            <div className=' pl-14 pr-20 text-center font-medium'>MA</div>
+                        </div>
+                        <div>
+                            <div className='pl-14 '>
+                                <div className='grid grid-cols-2   gap-x-44 gap-y-3  '>
+                                    <div>{this.state.postData}</div>
+                                    <div>{this.state.postData1}</div>
+                                    <ReactPaginate
+                                        className=''
+                                        previousLabel={"prev"}
+                                        nextLabel={"next"}
+                                        breakLabel={"..."}
+                                        breakClassName={"break-me"}
+                                        pageCount={this.state.pageCount}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={this.handlePageClick}
+                                        containerClassName={"pagination"}
+                                        subContainerClassName={"pages pagination"}
+                                        activeClassName={"active"} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-  );
+        )
+    }
 }
-
-export default Peringkat;
