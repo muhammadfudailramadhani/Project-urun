@@ -176,7 +176,6 @@ const Goals = () => {
             onClick={() => {
               // return console.log(multiStatus);
               let a = multiStatus.map((e) => e === "to-do" || e === "ongoing");
-
               if (a) {
                 Swal.fire({
                   title: "Are you sure?",
@@ -236,7 +235,6 @@ const Goals = () => {
           <button
             onClick={() => {
               // return console.log(multiId);
-
               Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",

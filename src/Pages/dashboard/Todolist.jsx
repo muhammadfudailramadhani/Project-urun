@@ -3,6 +3,8 @@ import calendar from '../../Images/calendar.png';
 import Delete from '../../Images/delete.png'
 import classes from './index.css'
 // import React from "react";
+import Swal from "sweetalert2";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from 'react'
@@ -16,6 +18,15 @@ const Todolist = () => {
     const [pageCount, setPageCount] = useState(0)
     const [deletedList] = useState([])
 
+    // function for sweet alert
+    const showAlert = () => {
+        Swal.fire({
+            title: "Success",
+            text: "Delete successful",
+            icon: "success",
+            confirmButtonText: "OK",
+        });
+    }
 
     const getData = async () => {
 
@@ -123,7 +134,7 @@ const Todolist = () => {
                             </div>
                             <div className='w-8 h-20 pl-2'>
                                 <button className='pt-7' onClick={() => { deleteList(pd.id) }}>
-                                    <img src={Delete} alt="" />
+                                    <img src={Delete} alt="" onClick={showAlert} />
                                 </button>
                             </div>
                         </div>
@@ -139,8 +150,6 @@ const Todolist = () => {
         const selectedPage = e.selected;
         setOffset(selectedPage * perPage)
     };
-
-
     useEffect(() => {
         getData()
     }, [offset])

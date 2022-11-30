@@ -825,16 +825,23 @@ const Peringkat = () => {
 
         for (let i = 0; i < data.length; i++) {
             for (let j = i + 1; j < data.length; j++) {
+                // mendapatkan jumlah tugas yang sudah selesai pada indeks yg sekarang
                 let doneTask1 = (data[i].TugasMa).filter(function (item) {
                     return item.Status;
                 }).length;
+                // mendapatkan total jumlah tugas yang sudah pada indeks yg sekarang
                 let allTask1 = (data[i].TugasMa).length;
+                // mendapatkan persenan berapa tugas yang sudah selesai pada indeks yg sekarang
                 let persentase1 = (doneTask1 / allTask1) * 100;
+                // mendapatkan jumlah tugas yang sudah selesai pada indeks yg setelahnya
                 let doneTask2 = (data[j].TugasMa).filter(function (item) {
                     return item.Status;
                 }).length;
+                // mendapatkan total jumlah tugas yang sudah pada indeks yg setelahnya
                 let allTask2 = (data[j].TugasMa).length;
+                // mendapatkan persenan berapa tugas yang sudah selesai pada indeks yg setelahnya
                 let persentase2 = (doneTask2 / allTask2) * 100;
+                // menukar indeks persenan tugas pada indeks yg sekarang dengan indeks yg setelahnya, jika persenan tugas pada indeks yg sekarang lebih kecil dari indeks yg setelahnya
                 if (persentase1 < persentase2) {
                     let temp;
                     temp = data[i];
@@ -878,16 +885,23 @@ const Peringkat = () => {
 
         for (let i = 0; i < data1.length; i++) {
             for (let j = i + 1; j < data1.length; j++) {
+                // mendapatkan jumlah ma yang sudah selesai pada indeks yg sekarang
                 let doneTask1 = (data1[i].TugasMa).filter(function (item) {
                     return item.Status;
                 }).length;
+                // mendapatkan total jumlah ma yang sudah pada indeks yg sekarang
                 let allTask1 = (data1[i].TugasMa).length;
+                // mendapatkan persenan berapa ma yang sudah selesai pada indeks yg sekarang
                 let persentase1 = (doneTask1 / allTask1) * 100;
+                // mendapatkan jumlah ma yang sudah selesai pada indeks yg setelahnya
                 let doneTask2 = (data1[j].TugasMa).filter(function (item) {
                     return item.Status;
                 }).length;
+                // mendapatkan total jumlah ma yang sudah pada indeks yg setelahnya
                 let allTask2 = (data1[j].TugasMa).length;
+                // mendapatkan persenan berapa ma yang sudah selesai pada indeks yg setelahnya
                 let persentase2 = (doneTask2 / allTask2) * 100;
+                // menukar indeks persenan ma pada indeks yg sekarang dengan indeks yg setelahnya, jika persenan ma pada indeks yg sekarang lebih kecil dari indeks yg setelahnya
                 if (persentase1 < persentase2) {
                     let temp;
                     temp = data1[i];
