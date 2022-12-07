@@ -1,6 +1,31 @@
-import React, { useState, useEffect, Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import profile from '../../Images/profile.png';
-import { data } from 'autoprefixer';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css"
+import './index.css';
+
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, width: "50px", height: "50px", display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '12px', background: "#4ADE80" }}
+            onClick={onClick}
+        />
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, width: "50px", height: "50px", display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '12px', background: "#4ADE80" }}
+            onClick={onClick}
+        />
+    );
+}
 
 const Peringkat = () => {
     const [offset, setOffset] = useState(0);
@@ -10,7 +35,15 @@ const Peringkat = () => {
     const [pageCount, setPageCount] = useState(0);
     const [deletedList] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+    };
     const getData = async () => {
         const data = [
             {
@@ -953,21 +986,37 @@ const Peringkat = () => {
         <div>
             <div className='pt-20 pb-10 '>
                 <div className=' bg-slate-200 rounded-lg w-full h-[50rem]  drop-shadow-xl  '>
-                    <div className='w-96 mx-auto font-extrabold text-2xl pt-3 pl-20'>Peringkat Teratas</div>
-                    <div className='grid grid-cols-2 gap-72 flex-auto w-full h-10 pt-1 pl-16 pr-14'>
-                        <div className=' pl-24 pr-20 text-center font-medium'>GOAL</div>
-                        <div className=' pl-14 pr-20 text-center font-medium'>MA</div>
-                    </div>
+                    <div className='w-96 mx-auto font-extrabold text-2xl pt-3 pl-20 pb-5'>Peringkat Teratas</div>
                     <div>
                         <div className='pl-14 '>
-                            <div className='grid grid-cols-2   gap-x-44 gap-y-3  '>
-                                <div>{data}</div>
-                                <div>{data1}</div>
+                            <div className='flex justify-between'>
+                                <Slider {...settings}>
+                                    <div>
+                                        <div className='pemisah'>
+                                            <div className='detail'>
+                                                <div className='text-pemisah font-medium'>GOAL</div>
+                                                <div className='pt-1'>{data}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className='pemisah'>
+                                            <div className='detail'>
+                                                <div className='text-pemisah font-medium'>MA</div>
+                                                <div className='pt-1'>{data1}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Slider>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {/* <div className='pemisah'>
+        <div className='text-center font-medium'>GOAL</div>
+        <div>{data}</div>
+    </div> */}
         </div>
     );
 }
