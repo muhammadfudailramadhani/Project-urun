@@ -42,7 +42,7 @@ const Peringkat = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        prevArrow: <SamplePrevArrow />,
     };
     const getData = async () => {
         const data = [
@@ -992,17 +992,17 @@ const Peringkat = () => {
                             <div className='flex justify-between'>
                                 <Slider {...settings}>
                                     <div>
-                                        <div className='pemisah'>
-                                            <div className='detail'>
-                                                <div className='text-pemisah font-medium'>GOAL</div>
+                                        <div>
+                                            <div className='m-auto w-[36%]'>
+                                                <div className='flex justify-center items-center rounded-[11px] w-[70px] h-[34px] text-white bg-[#4ADE80] font-medium'>GOAL</div>
                                                 <div className='pt-1'>{data}</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
-                                        <div className='pemisah'>
-                                            <div className='detail'>
-                                                <div className='text-pemisah font-medium'>MA</div>
+                                        <div>
+                                            <div className='m-auto w-[36%]'>
+                                                <div className='flex justify-center items-center rounded-[11px] w-[70px] h-[34px] text-white bg-[#4ADE80] font-medium'>MA</div>
                                                 <div className='pt-1'>{data1}</div>
                                             </div>
                                         </div>
@@ -1013,10 +1013,6 @@ const Peringkat = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className='pemisah'>
-        <div className='text-center font-medium'>GOAL</div>
-        <div>{data}</div>
-    </div> */}
         </div>
     );
 }
